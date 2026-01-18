@@ -64,15 +64,19 @@ This is the frontend client for the Ride Sharing Application, built with **Angul
   
 ## Screen Shoot
    **User Requesting Ride**
+   
 <img width="802" height="831" alt="image" src="https://github.com/user-attachments/assets/cc933f9f-6186-4729-8c7a-80a6acfb4175" />
 
    **Driver Got Notification**
+   
 <img width="816" height="778" alt="image" src="https://github.com/user-attachments/assets/a3d77b22-b4c2-4960-9f97-ab8ec3ebaa55" />
 
    **Driver Accepted**
+   
 <img width="787" height="814" alt="image" src="https://github.com/user-attachments/assets/eab95bd9-d9e0-4911-8e6e-1266d0d1603c" />
 
    **User Got the notification of Acceptance**
+   
 <img width="759" height="834" alt="image" src="https://github.com/user-attachments/assets/cfba8cd0-4f54-445b-bef3-d8b000b6173e" />
 
 
