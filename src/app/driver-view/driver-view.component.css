@@ -1,0 +1,16 @@
+.ride-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.active-ride {
+    background-color: #e3f2fd;
+    border: 1px solid #2196f3;
+}
+
+.btn-danger {
+    background-color: #f44336;
+}

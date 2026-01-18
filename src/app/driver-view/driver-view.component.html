@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Driver Dashboard</h2>
+
+    <div *ngIf="!isLoggedIn" class="card login-card">
+        <h3>Driver Login</h3>
+        <div class="form-group">
+            <label>Driver ID:</label>
+            <input [(ngModel)]="driverId" placeholder="Enter Driver ID">
+        </div>
+        <button (click)="login()" [disabled]="!driverId">Login</button>
+    </div>
+
+    <div *ngIf="isLoggedIn">
+        <p>Logged in as: <strong>{{driverId}}</strong></p>
+
+        <div class="card">
+            <div id="driver-map" class="map-container"></div>
+            <p><i>Click map to update your location. You must set a location to see nearby rides.</i></p>
+            <div *ngIf="driverLat">Current Location: {{driverLat | number:'1.4-4'}}, {{driverLng | number:'1.4-4'}}
+            </div>
+        </div>
+
+        <div *ngIf="activeRide" class="card active-ride">
+            <h3>Active Trip</h3>
+            <p><strong>Status:</strong> {{activeRide.status}}</p>
+            <p><strong>From:</strong> {{activeRide.pickupLocation}}</p>
+            <p><strong>To:</strong> {{activeRide.dropoffLocation}}</p>
+            <p><strong>Est Fare:</strong> {{activeRide.fare | currency:activeRide.currency}}</p>
+
+            <button (click)="endTrip()" class="btn-danger">End Trip</button>
+        </div>
+
+        <div *ngIf="!activeRide" class="card">
+            <h3>Available Rides ({{availableRides.length}})</h3>
+            <div *ngIf="availableRides.length === 0">Waiting for rides...</div>
+
+            <div *ngFor="let ride of availableRides" class="ride-item">
+                <div>
+                    <strong>{{ride.pickupLocation}}</strong> ➔ <strong>{{ride.dropoffLocation}}</strong><br>
+                    <small>Est. Fare: {{ride.fare | currency:ride.currency}}</small>
+                </div>
+                <button (click)="acceptRide(ride)">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>Rider View</h2>
+  <div class="card" *ngIf="!isLoggedIn">
+    <div class="form-group">
+      <label>Enter Passenger ID to Login:</label>
+      <input [(ngModel)]="passengerId" placeholder="e.g. user-001">
+      <button (click)="login()" [disabled]="!passengerId" style="margin-top: 10px;">Login</button>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="isLoggedIn">
+    <div class="form-group">
+      <label>Passenger ID: <b>{{passengerId}}</b></label>
+    </div>
+
+    <div id="user-map" class="map-container"></div>
+    <p><i>Click map to set Pickup (1st click) and Dropoff (2nd click)</i></p>
+
+    <div *ngIf="pickupLat">Pickup: {{pickupLat | number:'1.4-4'}}, {{pickupLng | number:'1.4-4'}}</div>
+    <div *ngIf="dropoffLat">Dropoff: {{dropoffLat | number:'1.4-4'}}, {{dropoffLng | number:'1.4-4'}}</div>
+
+    <div class="form-group">
+      <label>Ride Tier:</label>
+      <select [(ngModel)]="tier">
+        <option value="STANDARD">Standard</option>
+        <option value="PREMIUM">Premium</option>
+      </select>
+    </div>
+
+    <button (click)="createRide()"
+      [disabled]="!pickupLat || !dropoffLat || (currentRide && currentRide.status !== 'COMPLETED' && currentRide.status !== 'CANCELLED')">
+      Request Ride
+    </button>
+  </div>
+
+  <div class="card" *ngIf="currentRide">
+    <h3>Current Ride: {{currentRide.status}}</h3>
+    <p>Ride ID: {{currentRide.id}}</p>
+    <p>Driver: {{currentRide.driverId || 'Waiting for driver...'}}</p>
+    <p>Fare: {{currentRide.fare | currency:currentRide.currency}}</p>
+  </div>
+</div>
