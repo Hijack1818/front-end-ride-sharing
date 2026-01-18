@@ -19,8 +19,11 @@ export class UserViewComponent implements OnInit {
 
     pickupLat?: number;
     pickupLng?: number;
+    pickupAddress = '';
+
     dropoffLat?: number;
     dropoffLng?: number;
+    dropoffAddress = '';
 
     currentRide?: Ride;
     rideStatus = '';
@@ -64,12 +67,24 @@ export class UserViewComponent implements OnInit {
             this.pickupLat = latlng.lat;
             this.pickupLng = latlng.lng;
             this.pickupMarker = L.marker(latlng).addTo(this.map)
-                .bindPopup('Pickup Location').openPopup();
+                .bindPopup('Pickup: Fetching address...').openPopup();
+
+            this.api.getAddress(latlng.lat, latlng.lng).subscribe(data => {
+                this.pickupAddress = data.display_name;
+                this.pickupMarker?.setPopupContent(`Pickup: ${this.pickupAddress}`);
+            });
+
         } else if (!this.dropoffMarker) {
             this.dropoffLat = latlng.lat;
             this.dropoffLng = latlng.lng;
             this.dropoffMarker = L.marker(latlng).addTo(this.map)
-                .bindPopup('Dropoff Location').openPopup();
+                .bindPopup('Dropoff: Fetching address...').openPopup();
+
+            this.api.getAddress(latlng.lat, latlng.lng).subscribe(data => {
+                this.dropoffAddress = data.display_name;
+                this.dropoffMarker?.setPopupContent(`Dropoff: ${this.dropoffAddress}`);
+            });
+
         } else {
             // Reset
             this.map.removeLayer(this.pickupMarker);
@@ -78,8 +93,10 @@ export class UserViewComponent implements OnInit {
             this.dropoffMarker = undefined;
             this.pickupLat = undefined;
             this.pickupLng = undefined;
+            this.pickupAddress = '';
             this.dropoffLat = undefined;
             this.dropoffLng = undefined;
+            this.dropoffAddress = '';
 
             // Start new pickup
             this.handleMapClick(latlng);
@@ -98,8 +115,8 @@ export class UserViewComponent implements OnInit {
             pickupLng: this.pickupLng!,
             dropoffLat: this.dropoffLat,
             dropoffLng: this.dropoffLng!,
-            pickupLocation: `${this.pickupLat.toFixed(4)}, ${this.pickupLng!.toFixed(4)}`,
-            dropoffLocation: `${this.dropoffLat.toFixed(4)}, ${this.dropoffLng!.toFixed(4)}`,
+            pickupLocation: this.pickupAddress || `${this.pickupLat.toFixed(4)}, ${this.pickupLng!.toFixed(4)}`,
+            dropoffLocation: this.dropoffAddress || `${this.dropoffLat.toFixed(4)}, ${this.dropoffLng!.toFixed(4)}`,
             tier: this.tier,
             paymentMethod: this.paymentMethod
         };

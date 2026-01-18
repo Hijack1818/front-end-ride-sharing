@@ -16,8 +16,14 @@
     <div id="user-map" class="map-container"></div>
     <p><i>Click map to set Pickup (1st click) and Dropoff (2nd click)</i></p>
 
-    <div *ngIf="pickupLat">Pickup: {{pickupLat | number:'1.4-4'}}, {{pickupLng | number:'1.4-4'}}</div>
-    <div *ngIf="dropoffLat">Dropoff: {{dropoffLat | number:'1.4-4'}}, {{dropoffLng | number:'1.4-4'}}</div>
+    <div *ngIf="pickupLat">
+      <strong>Pickup:</strong> {{pickupAddress || 'Fetching address...'}}
+      <small>({{pickupLat | number:'1.4-4'}}, {{pickupLng | number:'1.4-4'}})</small>
+    </div>
+    <div *ngIf="dropoffLat">
+      <strong>Dropoff:</strong> {{dropoffAddress || 'Fetching address...'}}
+      <small>({{dropoffLat | number:'1.4-4'}}, {{dropoffLng | number:'1.4-4'}})</small>
+    </div>
 
     <div class="form-group">
       <label>Ride Tier:</label>

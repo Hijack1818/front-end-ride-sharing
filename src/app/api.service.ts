@@ -91,4 +91,8 @@ export class ApiService {
     getActiveRideForDriver(driverId: string): Observable<Ride> {
         return this.http.get<Ride>(`${this.baseUrl}/rides/active/driver/${driverId}`, { headers: this.getAuthHeaders() });
     }
+
+    getAddress(lat: number, lng: number): Observable<any> {
+        return this.http.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+    }
 }
